@@ -105,5 +105,27 @@ namespace TreitFileParser
 
             return hashSet.ToArray();
         }
+
+    }
+
+    public static class FileComparer
+    {
+        public static bool AreIdentical(string file1Path, string file2Path)
+        {
+            using FileStream file1Stream = File.OpenRead(file1Path);
+            using FileStream file2Stream = File.OpenRead(file2Path);
+            byte[] buffer1 = new byte[1024];
+            byte[] buffer2 = new byte[1024];
+            while (file1Stream.Position < file1Stream.Length && file2Stream.Position < file2Stream.Length)
+            {
+                file1Stream.Read(buffer1);
+                file2Stream.Read(buffer2);
+                if (!Enumerable.SequenceEqual(buffer1, buffer2))
+                    return false;
+            }
+            if (file1Stream.Position != file2Stream.Position)
+                return false;
+            return true;
+        }
     }
 }
