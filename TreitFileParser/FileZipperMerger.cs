@@ -145,7 +145,7 @@ namespace TreitFileParser
         {
             uint hash = (uint)$"{file1.Name}{file2.Name}".GetHashCode();
             string fileName = Path.Combine(outputFolder, $"{hash:X8}.bin");
-            FileZipperMerger<uint>.MergeFiles(file1.FullName, file2.FullName, fileName);
+            FileZipperMerger<T>.MergeFiles(file1.FullName, file2.FullName, fileName);
             File.Delete(file1.FullName);
             File.Delete(file2.FullName);
             return fileName;
