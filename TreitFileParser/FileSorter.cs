@@ -1,4 +1,3 @@
-﻿using System.IO.MemoryMappedFiles;
 using System.Runtime.InteropServices;
 
 namespace TreitFileParser
@@ -8,15 +7,8 @@ namespace TreitFileParser
         public static void SortFile(string filePath)
         {
             T[] values;
-            using (var mmf = MemoryMappedFile.CreateFromFile(filePath, FileMode.Open, null, 0, MemoryMappedFileAccess.Read))
-            using (var accessor = mmf.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read))
-            {
-                int fileSize = (int)accessor.Capacity;
-                int numberToRead = fileSize / Marshal.SizeOf<T>();
-
-                values = new T[numberToRead];
-                accessor.ReadArray(0, values, 0, numberToRead);
-            }
+            Span<byte> data = File.ReadAllBytes(filePath);
+            values = MemoryMarshal.Cast<byte, T>(data).ToArray();
             Array.Sort(values);
             using (FileStream fs = File.Create(filePath))
                 fs.Write(MemoryMarshal.Cast<T, byte>(values));
