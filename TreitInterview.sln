@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreitFileGenerator", "TreitFileGenerator\TreitFileGenerator.csproj", "{15D2A6CC-0E82-467F-B14A-6B04C4348C6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TreitFileParser", "TreitFileParser\TreitFileParser.csproj", "{7A3FF244-542C-45C5-BDC7-761DDC97D82C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15D2A6CC-0E82-467F-B14A-6B04C4348C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D2A6CC-0E82-467F-B14A-6B04C4348C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D2A6CC-0E82-467F-B14A-6B04C4348C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D2A6CC-0E82-467F-B14A-6B04C4348C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A3FF244-542C-45C5-BDC7-761DDC97D82C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A3FF244-542C-45C5-BDC7-761DDC97D82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A3FF244-542C-45C5-BDC7-761DDC97D82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A3FF244-542C-45C5-BDC7-761DDC97D82C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EDFE6F8F-42CF-43ED-A371-2E4043D497C9}
+	EndGlobalSection
+EndGlobal
