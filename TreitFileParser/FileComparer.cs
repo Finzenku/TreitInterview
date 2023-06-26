@@ -64,6 +64,45 @@ namespace TreitFileParser
                 }
             }
 
+            // One of the streams has reached the end of the file, check the rest of the other comapred to the last value
+            // At most, we should find one more match
+            while (file1Stream.Position < file1Stream.Length)
+            {
+                if (val1.CompareTo(val2) == 0)
+                {
+                    hashSet.Add(val1);
+                    break;
+                }
+                else
+                {
+                    if (file1Stream.Read(file1Buffer) < Size)
+                    {
+                        break;
+                    }
+                    val1 = MemoryMarshal.Cast<byte, T>(file1Buffer)[0];
+                }
+            }
+            while(file2Stream.Position < file2Stream.Length)
+            {
+                if (val1.CompareTo(val2) == 0)
+                {
+                    hashSet.Add(val1);
+                    break;
+                }
+                else
+                {
+                    if (file2Stream.Read(file2Buffer) < Size)
+                    {
+                        break;
+                    }
+                    val2 = MemoryMarshal.Cast<byte, T>(file2Buffer)[0];
+                }
+            }
+
+            // One last check for the road...
+            if (val1.CompareTo(val2) == 0)
+                hashSet.Add(val1);
+
             return hashSet.ToArray();
         }
     }
