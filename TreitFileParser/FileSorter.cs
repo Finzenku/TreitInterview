@@ -4,11 +4,28 @@ namespace TreitFileParser
 {
     public static class FileSorter<T> where T : struct, IComparable<T>
     {
+        private static int Size;
+
+        static FileSorter()
+        {
+            Size = Marshal.SizeOf<T>();
+        }
+
         public static void SortFile(string filePath)
         {
             T[] values;
-            Span<byte> data = File.ReadAllBytes(filePath);
-            values = MemoryMarshal.Cast<byte, T>(data).ToArray();
+
+            using (FileStream fileStream = File.OpenRead(filePath))
+            {
+                values = new T[fileStream.Length / Size];
+                Span<byte> file1Buffer = new byte[Size];
+                for (int i = 0; i< values.Length; i++)
+                {
+                    fileStream.Read(file1Buffer);
+                    values[i] = MemoryMarshal.Cast<byte, T>(file1Buffer)[0];
+                }
+            }
+
             Array.Sort(values);
             using (FileStream fs = File.Create(filePath))
                 fs.Write(MemoryMarshal.Cast<T, byte>(values));
