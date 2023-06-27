@@ -9,12 +9,13 @@
         /// </summary>
         /// <param name="fileToSplitPath">The absolute path to the file that you want to split</param>
         /// <param name="splitSizeInMB">The maximum size of the split files in MB (1024 KB)</param>
+        /// <param name="ensureByteMultiple">Ensures that the split file size will be a multiple of this number to prevent breaking apart structs</param>
         /// <param name="outputFilesFolder">The folder you want the output files writen to</param>
         /// <param name="useRelativePath">Determines whether the outputFilesFolder is a relative path from your fileToSplitPath's directory or an absolute path, default: true</param>
         /// <returns>An array of file path strings for the newly created files</returns>
-        public static string[] Split(string fileToSplitPath, int splitSizeInMB, string outputFilesFolder, bool useRelativePath = true)
+        public static string[] Split(string fileToSplitPath, int splitSizeInMB, int ensureByteMultiple, string outputFilesFolder, bool useRelativePath = true)
         {
-            int chunkSize = splitSizeInMB * OneMB;
+            int chunkSize = (splitSizeInMB * OneMB / ensureByteMultiple) * ensureByteMultiple;
             FileInfo fileInfo = new FileInfo(fileToSplitPath);
             string fileName = fileInfo.Name.Substring(0, fileInfo.Name.IndexOf(fileInfo.Extension));
             bool spareChunk = fileInfo.Length % chunkSize > 0;

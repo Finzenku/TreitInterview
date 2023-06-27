@@ -35,7 +35,7 @@ namespace TreitFileParser
         {
             FileInfo fileInfo = new(filePath);
             string newFile = @$"{fileInfo.DirectoryName!}\Sorted{fileInfo.Name}";
-            string[] splitFiles = FileSplitter.Split(filePath, chunkSizeInMB, "Splits", true);
+            string[] splitFiles = FileSplitter.Split(filePath, chunkSizeInMB, Size, "Splits", true);
             foreach (string file in splitFiles)
             {
                 FileSorter<T>.SortFile(file);
