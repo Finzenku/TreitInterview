@@ -26,13 +26,19 @@ namespace TreitFileParser
             }
             T val1 = MemoryMarshal.Cast<byte, T>(file1Buffer)[0];
             T val2 = MemoryMarshal.Cast<byte, T>(file2Buffer)[0];
-            HashSet<T> hashSet = new();
-
+            List<T> distinctList = new();
+            bool firstValue = true;
             while (file1Stream.Position < file1Stream.Length && file2Stream.Position < file2Stream.Length)
             {
                 if (val1.CompareTo(val2) == 0)
                 {
-                    hashSet.Add(val1);
+                    // Because our arrays are sorted, we can just check to see if we're trying to add the previous value instead of using a HashSet
+                    // We can't check distinctList[^1] when the list is empty so we use a bool flag for the first value instead of checking distinctList.Count() every loop
+                    if (firstValue || distinctList[^1].CompareTo(val1) != 0)
+                    {
+                        distinctList.Add(val1);
+                        firstValue = false;
+                    }
                     if (file1Stream.Read(file1Buffer) < Size)
                     {
                         break;
@@ -69,7 +75,7 @@ namespace TreitFileParser
             {
                 if (val1.CompareTo(val2) == 0)
                 {
-                    hashSet.Add(val1);
+                    distinctList.Add(val1);
                     break;
                 }
                 else
@@ -85,7 +91,7 @@ namespace TreitFileParser
             {
                 if (val1.CompareTo(val2) == 0)
                 {
-                    hashSet.Add(val1);
+                    distinctList.Add(val1);
                     break;
                 }
                 else
@@ -100,9 +106,9 @@ namespace TreitFileParser
 
             // One last check for the road...
             if (val1.CompareTo(val2) == 0)
-                hashSet.Add(val1);
+                distinctList.Add(val1);
 
-            return hashSet.ToArray();
+            return distinctList.ToArray();
         }
 
     }
